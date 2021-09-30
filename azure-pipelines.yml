@@ -15,7 +15,7 @@ stages:
         displayName: Deploy to Production
         environment:
           name: "my-website-prod"
-          tags: web
+          resourceType: VirtualMachine
         strategy:
           runOnce:
             deploy:
