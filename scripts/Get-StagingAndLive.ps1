@@ -38,12 +38,12 @@ else {
     $result["StagingServer"] = "$serverFarmName-blue"
 }
 
-Write-Host "##vso[task.setvariable variable=LiveBlueGreen]$result['LiveBlueGreen']"
-Write-Host "##vso[task.setvariable variable=LiveDeployPath]$result['LiveDeployPath']"
-Write-Host "##vso[task.setvariable variable=LiveServer]$result['LiveServer']"
+Write-Host "##vso[task.setvariable variable=liveBlueGreen]$result['LiveBlueGreen']"
+Write-Host "##vso[task.setvariable variable=liveDeployPath]$result['LiveDeployPath']"
+Write-Host "##vso[task.setvariable variable=liveServer]$result['LiveServer']"
 
-Write-Host "##vso[task.setvariable variable=StagingBlueGreen]$result['StagingBlueGreen']"
-Write-Host "##vso[task.setvariable variable=StagingDeployPath]$result['StagingDeployPath']"
-Write-Host "##vso[task.setvariable variable=StagingServer]$result['StagingServer']"
+Write-Host "##vso[task.setvariable variable=stagingBlueGreen]$result['StagingBlueGreen']"
+Write-Host "##vso[task.setvariable variable=stagingDeployPath]$result['StagingDeployPath']"
+Write-Host "##vso[task.setvariable variable=stagingServer]$result['StagingServer']"
     
 }
