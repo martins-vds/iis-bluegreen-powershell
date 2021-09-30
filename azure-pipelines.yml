@@ -8,9 +8,11 @@ variables:
   warmUpPath: "/index.html"
 
 stages:
-  - stage: "Deploy to Production"
+  - stage: deployProd
+    displayName: Deploy to Production
     jobs:
-      - deployment: "Deploy to Production"
+      - deployment: deployProd
+        displayName: Deploy to Production
         environment: "my-website-prod"
         strategy:
           runOnce:
