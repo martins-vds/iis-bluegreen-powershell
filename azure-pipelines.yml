@@ -16,12 +16,9 @@ stages:
         environment: "my-website-prod"
         strategy:
           runOnce:
-            preDeploy:
+            deploy:
               steps:
                 - task: PowerShell@2
                   inputs:
                     filePath: 'scripts/Get-StagingAndLive.ps1'
                     arguments: '-serverFarmName $(serverFarmName) -bluePath $(bluePath) -greenPath $(greenPath)'
-            deploy:
-              steps:
-                - powershell: write-host Deploying...
