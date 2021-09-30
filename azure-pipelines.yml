@@ -13,7 +13,9 @@ stages:
     jobs:
       - deployment: deployProd
         displayName: Deploy to Production
-        environment: "my-website-prod.zerodowntime"
+        environment:
+          name: "my-website-prod"
+          tags: web
         strategy:
           runOnce:
             deploy:
