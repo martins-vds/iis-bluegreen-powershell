@@ -1,8 +1,8 @@
 
 variables:
   serverFarmName: "my-website"
-  bluePath: "c:\\inetpub\\wwwroot\\myapp.blue"
-  greenPath: "c:\\inetpub\\wwwroot\\myapp.green"
+  bluePath: "c:\\inetpub\\wwwroot\\mywebsite.blue"
+  greenPath: "c:\\inetpub\\wwwroot\\mywebsite.green"
   bluePort: 8888
   greenPort: 9999
   warmUpPath: "/index.html"
