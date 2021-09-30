@@ -24,7 +24,7 @@ Write-Host "Warming $instanceToWarm up on $stagingSite"
 # Loop until we have a satisfactory response time
 Do {
     $time = Measure-Command {
-        $res = Invoke-WebRequest $stagingSite
+        $res = Invoke-WebRequest $stagingSite -UseBasicParsing
     }
     $ms = $time.TotalMilliSeconds
     If ($ms -ge $minTime) {
