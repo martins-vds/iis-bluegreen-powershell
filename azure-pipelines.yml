@@ -5,7 +5,7 @@ variables:
   greenPath: "c:\\inetpub\\wwwroot\\mywebsite.green"
   bluePort: 8888
   greenPort: 9999
-  warmUpPath: "/index.html"
+  warmUpPath: "index.html"
 
 stages:
   - stage: deployProd
@@ -31,7 +31,12 @@ stages:
                   env:
                     server: $(stagingServer)
                 - task: PowerShell@2
-                  displayName: Warm Up Instance '$(stagingServer)'
+                  displayName: Warm Up Staging Instance $(stagingServer)
                   inputs:
                     filePath: 'scripts/WarmUp-StagingInstance.ps1'
                     arguments: '-instanceToWarm "$(stagingServer)" -bluePort "$(bluePort)" -greenPort "$(greenPort)" -serverFarmName "$(serverFarmName)" -warmUpPath "$(warmUpPath)"'
+                - task: PowerShell@2
+                  displayName: Bring Up Staging Instance
+                  inputs:
+                    filePath: 'scripts/Enable-StagingInstance.ps1'
+                    arguments: '-serverFarmName "$(serverFarmName)" -stagingInstance $(stagingServer)'
