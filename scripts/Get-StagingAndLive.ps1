@@ -1,8 +1,11 @@
-param (
+function Get-StagingAndLive {
+    param (
     [string]$serverFarmName = $(throw '-serverFarmName is required'),
     [String]$bluePath = $(throw '-bluePath is required'),
     [String]$greenPath = $(throw '-greenPath is required')
 )
+
+Import-Module -Force "$PSScriptRoot\Modules\Server-Farm.psm1"
 
 Write-Host "Detecting live vs staging:"
 
@@ -35,4 +38,12 @@ else {
     $result["StagingServer"] = "$serverFarmName-blue"
 }
 
-return $result
+Write-Host "##vso[task.setvariable variable=LiveBlueGreen]$result['LiveBlueGreen']"
+Write-Host "##vso[task.setvariable variable=LiveDeployPath]$result['LiveDeployPath']"
+Write-Host "##vso[task.setvariable variable=LiveServer]$result['LiveServer']"
+
+Write-Host "##vso[task.setvariable variable=StagingBlueGreen]$result['StagingBlueGreen']"
+Write-Host "##vso[task.setvariable variable=StagingDeployPath]$result['StagingDeployPath']"
+Write-Host "##vso[task.setvariable variable=StagingServer]$result['StagingServer']"
+    
+}

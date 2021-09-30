@@ -1,0 +1,20 @@
+
+variables:
+  serverFarmName: "my-website"
+  bluePath: "c:\\inetpub\\wwwroot\\myapp.blue"
+  greenPath: "c:\\inetpub\\wwwroot\\myapp.green"
+  bluePort: 8888
+  greenPort: 9999
+  warmUpPath: "/index.html"
+
+stages:
+  - stage: "Deploy to Production"
+    jobs:
+      - deployment: "Deploy to Production"
+        environment: "my-website-prod"
+        strategy:
+          runOnce:
+            preDeploy:
+              steps:
+                - powershell: 
+                  

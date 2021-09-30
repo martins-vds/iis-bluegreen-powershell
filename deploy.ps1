@@ -7,30 +7,22 @@ param (
     [String]$greenPath = $(throw '-greenPath is required'),
     [String]$bluePort = $(throw '-bluePort is required'),
     [String]$greenPort = $(throw '-greenPort is required'),
-    [String]$warmUpPath = $(throw '-warmUpPath is required'),
+    [String]$warmUpPath = $(throw '-warmUpPath is required')
 )
 
-Import-Module -Force "$PSScriptRoot\lib\server-farm.psm1"
-Import-Module -Force "$PSScriptRoot\lib\remote-execution.psm1"
+Import-Module -Force "$PSScriptRoot\lib\Server-Farm.psm1"
+. "$PSScriptRoot\prepare\Get-.ps1"
 
-$credential = Get-ServerCredentials $username $password
-$remoteMachines = $machines -split ","
+Write-Host "========================================================================================"
+$currentConfig = Invoke-ScriptRemotely -localScriptFile ".\prepare\01_get-staging-and-live.ps1" -Session $session -ArgumentList $serverFarmName, $bluePath, $greenPath
 
-$remoteMachines | ForEach-Object {
-    Write-Host "========================================================================================"
-    Write-Host "Opening remote session to $_"
-    $session = New-PsSession -ComputerName $_ -Credential $credential
-    Import-ModuleRemotely "server-farm" $session
-    $currentConfig = Invoke-ScriptRemotely -localScriptFile ".\prepare\01_get-staging-and-live.ps1" -Session $session -ArgumentList $serverFarmName, $bluePath, $greenPath
+Write-Host "Current Blue/Green Config:"
+$currentConfig
+Write-Host "-----------------------------"
 
-    Write-Host "Current Blue/Green Config:"
-    $currentConfig
-    Write-Host "-----------------------------"
-
-    Exit-PSSession
-    Write-Host "Session Closed"
-    Write-Host "========================================================================================"
-}
+Exit-PSSession
+Write-Host "Session Closed"
+Write-Host "========================================================================================"
 
 $deployPath = $currentConfig["LiveDeployPath"]
 $liveServer = $currentConfig["LiveServer"]
