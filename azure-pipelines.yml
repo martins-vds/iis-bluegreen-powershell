@@ -22,13 +22,16 @@ stages:
               steps:
                 - checkout: self
                 - task: PowerShell@2
+                  displayName: Get Staging and Live Instances
                   inputs:
                     filePath: 'scripts/Get-StagingAndLive.ps1'
                     arguments: '-serverFarmName "$(serverFarmName)" -bluePath "$(bluePath)" -greenPath "$(greenPath)"'
                 - powershell: write-host "Deploying to Staging $env:server"
+                  displayName: Deploy to $(stagingServer)
                   env:
                     server: $(stagingServer)
                 - task: PowerShell@2
+                  displayName: Warm Up Instance '$(stagingServer)'
                   inputs:
                     filePath: 'scripts/WarmUp-StagingInstance.ps1'
-                    arguments: '-stagingServer "$(stagingServer)" -bluePort "$(bluePort)" -greenPort "$(greenPort)" -serverFarmName "$(serverFarmName)" -warmUpPath "$(warmUpPath)"'
+                    arguments: '-instanceToWarm "$(stagingServer)" -bluePort "$(bluePort)" -greenPort "$(greenPort)" -serverFarmName "$(serverFarmName)" -warmUpPath "$(warmUpPath)"'
