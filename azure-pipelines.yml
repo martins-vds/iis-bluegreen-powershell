@@ -25,3 +25,8 @@ stages:
                   inputs:
                     filePath: 'scripts/Get-StagingAndLive.ps1'
                     arguments: '-serverFarmName $(serverFarmName) -bluePath $(bluePath) -greenPath $(greenPath)'
+                - powershell: write-host "Deploying to Staging $(StagingServer)"
+                - task: PowerShell@2
+                  inputs:
+                    filePath: 'scripts/WarmUp-StagingInstance.ps1'
+                    arguments: '-stagingServer $(stagingServer) -bluePort $(bluePort) -greenPort $(greenPort) -serverFarmName $(serverFarmName) -warmUpPath $(warmUpPath)'
