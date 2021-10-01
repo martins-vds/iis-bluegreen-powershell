@@ -27,7 +27,7 @@ stages:
                     filePath: 'scripts/Get-StagingAndLive.ps1'
                     arguments: '-serverFarmName "$(serverFarmName)" -bluePath "$(bluePath)" -greenPath "$(greenPath)"'
                 - powershell: write-host "Deploying to Staging $env:server"
-                  displayName: Deploy to $(stagingServer)
+                  displayName: Deploy to Staging Instance
                   env:
                     server: $(stagingServer)
                 - task: PowerShell@2
