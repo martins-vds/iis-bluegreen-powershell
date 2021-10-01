@@ -39,9 +39,14 @@ stages:
                   displayName: Bring Up Staging Instance
                   inputs:
                     filePath: 'scripts/Enable-StagingInstance.ps1'
-                    arguments: '-serverFarmName "$(serverFarmName)" -stagingInstance $(stagingServer)'
+                    arguments: '-serverFarmName "$(serverFarmName)" -stagingInstance "$(stagingServer)"'
                 - task: PowerShell@2
                   displayName: Drain Live Instance
                   inputs:
                     filePath: 'scripts/Drain-LiveInstance.ps1'
-                    arguments: '-serverFarmName "$(serverFarmName)" -liveInstance $(liveServer)'
+                    arguments: '-serverFarmName "$(serverFarmName)" -liveInstance "$(liveServer)"'
+                - task: PowerShell@2
+                  displayName: Post Deployment Health Checks
+                  inputs:
+                    filePath: 'scripts/Run-PostDeployHealthChecks.ps1'
+                    arguments: '-serverFarmName "$(serverFarmName)" -oldStagingSite "$(stagingServer)" -oldLiveSite "$(liveServer)"'
