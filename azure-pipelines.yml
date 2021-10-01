@@ -44,4 +44,4 @@ stages:
                   displayName: Drain Live Instance
                   inputs:
                     filePath: 'scripts/Drain-LiveInstance.ps1'
-                    arguments: '-serverFarmName "$(serverFarmName)" -stagingInstance $(liveServer)'
+                    arguments: '-serverFarmName "$(serverFarmName)" -liveInstance $(liveServer)'
