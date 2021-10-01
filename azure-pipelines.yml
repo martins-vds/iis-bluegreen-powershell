@@ -31,14 +31,14 @@ stages:
                   env:
                     server: $(stagingServer)
                 - task: PowerShell@2
-                  displayName: Warm Up Staging Instance $(stagingServer)
+                  displayName: Warm Up Staging Instance
                   inputs:
                     filePath: 'scripts/WarmUp-StagingInstance.ps1'
                     arguments: '-instanceToWarm "$(stagingServer)" -bluePort "$(bluePort)" -greenPort "$(greenPort)" -serverFarmName "$(serverFarmName)" -warmUpPath "$(warmUpPath)"'
                 - task: PowerShell@2
                   displayName: Bring Up Staging Instance
                   inputs:
-                    filePath: 'scripts/Enable-StagingInstance.ps1'
+                    filePath: 'scripts/BringUp-StagingInstance.ps1'
                     arguments: '-serverFarmName "$(serverFarmName)" -stagingInstance "$(stagingServer)"'
                 - task: PowerShell@2
                   displayName: Drain Live Instance
@@ -46,7 +46,7 @@ stages:
                     filePath: 'scripts/Drain-LiveInstance.ps1'
                     arguments: '-serverFarmName "$(serverFarmName)" -liveInstance "$(liveServer)"'
                 - task: PowerShell@2
-                  displayName: Post Deployment Health Checks
+                  displayName: Run Post Deployment Health Checks
                   inputs:
                     filePath: 'scripts/Run-PostDeployHealthChecks.ps1'
                     arguments: '-serverFarmName "$(serverFarmName)" -oldStagingSite "$(stagingServer)" -oldLiveSite "$(liveServer)"'
