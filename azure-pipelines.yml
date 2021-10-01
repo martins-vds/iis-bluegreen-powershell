@@ -40,3 +40,8 @@ stages:
                   inputs:
                     filePath: 'scripts/Enable-StagingInstance.ps1'
                     arguments: '-serverFarmName "$(serverFarmName)" -stagingInstance $(stagingServer)'
+                - task: PowerShell@2
+                  displayName: Drain Live Instance
+                  inputs:
+                    filePath: 'scripts/Drain-LiveInstance.ps1'
+                    arguments: '-serverFarmName "$(serverFarmName)" -stagingInstance $(liveServer)'
